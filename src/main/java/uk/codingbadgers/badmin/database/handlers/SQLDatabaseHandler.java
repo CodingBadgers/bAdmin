@@ -87,12 +87,43 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 
 	@Override
 	public BanEntry getData(String uuid) {
-		return null;
+		try {
+			String query = "SELECT * FROM bAdmin_data WHERE `id` = ?;";
+	
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setString(1, uuid);
+			
+			ResultSet results = statement.executeQuery();
+			
+			if (results.next()) {
+				BanEntry entry = new BanEntry(results.getString("id"),
+						BanType.getFromId(results.getInt("type")),
+						results.getString("reason"),
+						results.getString("data"));
+				
+				return entry;
+			}
+			
+			return null;
+			
+		} catch (SQLException ex) {
+			throw new DatabaseException(ex);
+		}
 	}
 
 	@Override
 	public void removeBan(String uuid) {
-		
+		try {
+			String query = "REMOVE FROM bAdmin_data WHERE `id` = ?";
+			
+			PreparedStatement statement = conn.prepareStatement(query);
+			
+			statement.setString(1, uuid);
+			
+			statement.execute();
+		} catch (SQLException ex) {
+			throw new DatabaseException(ex);
+		}
 	}
 
 	@Override
