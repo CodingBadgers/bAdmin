@@ -12,7 +12,6 @@ import java.util.List;
 import uk.codingbadgers.badmin.BanEntry;
 import uk.codingbadgers.badmin.BanType;
 import uk.codingbadgers.badmin.Config.DatabaseInfo;
-import uk.codingbadgers.badmin.bAdmin;
 import uk.codingbadgers.badmin.database.DatabaseHandler;
 import uk.codingbadgers.badmin.exception.DatabaseException;
 
@@ -114,8 +113,6 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 									results.getString("reason"),
 									results.getString("data"));
 				bans.add(entry);
-				
-				bAdmin.getInstance().getLogger().info(entry.getName() + " has been banned for " + entry.getReason());
 			}
 			
 		} catch (SQLException ex) {

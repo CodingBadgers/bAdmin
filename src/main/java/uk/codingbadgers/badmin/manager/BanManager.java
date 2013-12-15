@@ -52,6 +52,8 @@ public class BanManager {
 		for (BanEntry entry : bAdmin.getInstance().getHandler().getBans()) {
 			bans.put(entry.getName(), entry);
 		}
+		
+		bAdmin.getInstance().getLogger().info("Loaded " + bans.size() + " bans from the database");
 	}
 	
 	public void saveBans() {
