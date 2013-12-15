@@ -6,8 +6,8 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class TempBanCommand extends Command {
 
-	public TempBanCommand(bAdmin plugin) {
-		super("tempban");
+	public TempBanCommand() {
+		super("tempban"); 
 	}
 
 	@Override

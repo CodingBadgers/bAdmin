@@ -6,7 +6,7 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class WarnCommand extends Command {
 
-	public WarnCommand(bAdmin plugin) {
+	public WarnCommand() {
 		super("warn");
 	}
 

@@ -20,7 +20,7 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class BanCommand extends Command {
 
-	public BanCommand(bAdmin plugin) {
+	public BanCommand() {
 		super("ban");
 	}
 

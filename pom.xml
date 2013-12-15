@@ -29,7 +29,7 @@
 
 	<repositories>
 		<repository>
-			<id>md5-repo</id>
+			<id>sonatype-repo</id>
 			<url>http://oss.sonatype.org/content/repositories/snapshots/</url>
 		</repository>
 	</repositories>
@@ -37,6 +37,13 @@
 	<build>
 		<finalName>${project.name}-${project.version}</finalName>
 
+		<resources>
+		    <resource>
+		        <directory>${project.basedir}/src/main/resources</directory>
+		        <filtering>true</filtering>
+		    </resource>
+		</resources>
+		
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
