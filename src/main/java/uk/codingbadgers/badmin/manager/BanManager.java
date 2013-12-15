@@ -5,6 +5,7 @@ import java.util.Map;
 
 import uk.codingbadgers.badmin.BanEntry;
 import uk.codingbadgers.badmin.BanType;
+import uk.codingbadgers.badmin.bAdmin;
 
 import lombok.Getter;
 
@@ -37,15 +38,20 @@ public class BanManager {
 	}
 	
 	public synchronized void addBan(String uuid, BanType type, String reason) {
-		bans.put(uuid, new BanEntry(uuid, type, reason));
+		BanEntry entry = new BanEntry(uuid, type, reason);
+		bans.put(uuid, entry);
+		bAdmin.getInstance().getHandler().addBan(entry);
 	}
 	
 	public void removeBan(String uuid) {
 		bans.remove(uuid);
+		bAdmin.getInstance().getHandler().removeBan(uuid);
 	}
 	
 	public void loadBans() {
-		
+		for (BanEntry entry : bAdmin.getInstance().getHandler().getBans()) {
+			bans.put(entry.getName(), entry);
+		}
 	}
 	
 	public void saveBans() {

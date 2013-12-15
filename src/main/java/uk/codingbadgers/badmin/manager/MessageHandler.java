@@ -64,6 +64,20 @@ public class MessageHandler {
 		return components;
 	}
 
+	public static BaseComponent[] kickedBroadcast(String banned, String banner, String reason) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent(banned.toLowerCase(Locale.ENGLISH) + " has been kicked from this server by " + banner.toLowerCase(Locale.ENGLISH) + " for " + reason, false, ChatColor.RED);
+		return components;
+	}
+
+	public static BaseComponent[] kickedSuccess(String banned, String reason) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent("You have kicked " + banned.toLowerCase(Locale.ENGLISH) + " for " + reason, false, ChatColor.RED);
+		return components;
+	}
+
 	public static BaseComponent[] noPermission() {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
@@ -98,13 +112,20 @@ public class MessageHandler {
 		components[1] = createComponent("You cannot ban yourself!", false, ChatColor.RED);
 		return components;
 	}
+
+	public static BaseComponent[] kickSelf() {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent("You cannot kick yourself!", false, ChatColor.RED);
+		return components;
+	}
 	
 	private static BaseComponent createComponent(String message, boolean bold, ChatColor color) {
 		return new ComponentBuilder(message).bold(bold).color(color).create()[0];
 	}
 	
 	private static BaseComponent createPrefix() {
-		return new ComponentBuilder("[bAdmin]").bold(true).color(ChatColor.DARK_RED).append(" ").create()[0];
+		return new ComponentBuilder("[bAdmin] ").bold(true).color(ChatColor.DARK_RED).create()[0];
 	}
 	
 }
