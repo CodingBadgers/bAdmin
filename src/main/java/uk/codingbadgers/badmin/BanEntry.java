@@ -2,15 +2,16 @@ package uk.codingbadgers.badmin;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class BanEntry {
 
-	private String name;
-	private BanType type;
-	private String reason;
+	private final String name;
+	private final BanType type;
+	private final String reason;
+	private String data = "";
 	
 }
