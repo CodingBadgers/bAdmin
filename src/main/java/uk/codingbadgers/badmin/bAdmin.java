@@ -83,7 +83,10 @@ public class bAdmin extends Plugin {
 			}
 			
 			if (this.config == null || this.config.getConfigVersion() != CURRENT_CONFIG_VERSION) {
-				getLogger().warning("Outdated config, regenerating. Please note you will have to resetup parts of the config");
+				getLogger().warning("--------------------------------------------------------");
+				getLogger().warning("Outdated config, regenerating.");
+				getLogger().warning("Please note you will have to resetup parts of the config");
+				getLogger().warning("--------------------------------------------------------");
 
 				if (!config.delete()) {
 					throw new IOException("Error deleting old config file");
