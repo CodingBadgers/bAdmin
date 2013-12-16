@@ -20,6 +20,8 @@ public class Config {
 		private String pass = "";
 		private int port = -1;
 	}
+
+	@Getter private int configVersion = 0x01;
 	
 	@Getter private DatabaseInfo databaseInfo = new DatabaseInfo();
 	
