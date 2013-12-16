@@ -152,6 +152,4 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 		
 		return bans;
 	}
-
-
 }

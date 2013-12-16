@@ -3,7 +3,7 @@ package uk.codingbadgers.badmin.database;
 import java.lang.reflect.Constructor;
 import uk.codingbadgers.badmin.bAdmin;
 import uk.codingbadgers.badmin.Config.DatabaseInfo;
-import uk.codingbadgers.badmin.database.handlers.FileDatabaseHandler;
+import uk.codingbadgers.badmin.database.handlers.JsonDatabaseHandler;
 import uk.codingbadgers.badmin.database.handlers.SQLDatabaseHandler;
 import uk.codingbadgers.badmin.database.handlers.SQLiteDatabaseHandler;
 import uk.codingbadgers.badmin.exception.DatabaseException;
@@ -12,7 +12,7 @@ public enum DatabaseType {
 
 	SQL(SQLDatabaseHandler.class),
 	SQLITE(SQLiteDatabaseHandler.class),
-	FILE(FileDatabaseHandler.class),
+	JSON(JsonDatabaseHandler.class),
 	;
 	
 	private Constructor<? extends DatabaseHandler> ctor;

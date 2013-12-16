@@ -12,7 +12,7 @@ public class Config {
 	@Data
 	@NoArgsConstructor
 	public static class DatabaseInfo {
-		private DatabaseType type = DatabaseType.FILE;
+		private DatabaseType type = DatabaseType.JSON;
 		private String database = "bans.bdm";
 		// MYSQL ONLY
 		private String host = "";
