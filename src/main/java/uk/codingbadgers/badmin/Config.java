@@ -25,4 +25,6 @@ public class Config {
 	
 	@Getter private DatabaseInfo databaseInfo = new DatabaseInfo();
 	
+	@Getter private boolean warnOnDelay = true;
+	
 }

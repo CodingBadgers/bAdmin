@@ -48,6 +48,13 @@ public class MessageHandler {
 			components[1] = createComponent("/kick <player> <reason>", false, ChatColor.RED);
 			return components;
 		}
+		
+		public static BaseComponent[] isbanned() {
+			BaseComponent[] components = new BaseComponent[2];
+			components[0] = createPrefix();
+			components[1] = createComponent("/isbanned <player>", false, ChatColor.RED);
+			return components;
+		}
 	}
 
 	public static BaseComponent[] bannedBroadcast(String banned, String banner, String reason) {
@@ -78,13 +85,6 @@ public class MessageHandler {
 		return components;
 	}
 
-	public static BaseComponent[] noPermission() {
-		BaseComponent[] components = new BaseComponent[2];
-		components[0] = createPrefix();
-		components[1] = createComponent("You do not have permission to do that!", false, ChatColor.RED);
-		return components;
-	}
-
 	public static BaseComponent[] noPlayer(String user) {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
@@ -95,28 +95,42 @@ public class MessageHandler {
 	public static BaseComponent[] multiplePlayers(String user, String banned) {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
-		components[1] = createComponent("Multiple players for " + user + " found on the lookup using player with name " + banned, false, ChatColor.RED);
+		components[1] = createComponent("Multiple players for " + user + " found on the lookup, using player with name " + banned, false, ChatColor.RED);
 		return components;
 	}
 
-	public static BaseComponent[] banUsage() {
+	public static BaseComponent[] alreadyBanned(String user) {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
-		components[1] = createComponent("You do not have permission to do that!", false, ChatColor.RED);
+		components[1] = createComponent(user + " is already banned", false, ChatColor.RED);
+		return components;
+	}
+	
+	public static BaseComponent[] selfError(String type) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent("You cannot " + type + " yourself!", false, ChatColor.RED);
 		return components;
 	}
 
-	public static BaseComponent[] banSelf() {
+	public static BaseComponent[] isBannedLooking(String user) {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
-		components[1] = createComponent("You cannot ban yourself!", false, ChatColor.RED);
+		components[1] = createComponent("Searching for ban for " + user + "...", false, ChatColor.RED);
 		return components;
 	}
 
-	public static BaseComponent[] kickSelf() {
+	public static BaseComponent[] notBanned(String user) {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
-		components[1] = createComponent("You cannot kick yourself!", false, ChatColor.RED);
+		components[1] = createComponent(user + " is currently not banned", false, ChatColor.RED);
+		return components;
+	}
+
+	public static BaseComponent[] isBanned(String user) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent(user + " is currently banned", false, ChatColor.RED);
 		return components;
 	}
 	

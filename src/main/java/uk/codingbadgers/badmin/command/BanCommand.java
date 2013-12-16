@@ -21,16 +21,11 @@ import net.md_5.bungee.api.plugin.Command;
 public class BanCommand extends Command {
 
 	public BanCommand() {
-		super("ban");
+		super("ban", "badmin.command.ban");
 	}
 
 	@Override
 	public void execute(final CommandSender sender, String[] args) {
-		
-		if (!sender.hasPermission("badmin.command.ban")) {
-			sender.sendMessage(noPermission());
-			return;
-		}
 		
 		if (args.length < 2) {
 			sender.sendMessage(ban());
@@ -40,7 +35,7 @@ public class BanCommand extends Command {
 		final String user = args[0];
 		
 		if (user.equalsIgnoreCase(sender.getName())) {
-			sender.sendMessage(banSelf());
+			sender.sendMessage(selfError("ban"));
 			return;
 		}
 		
@@ -79,7 +74,11 @@ public class BanCommand extends Command {
 					sender.sendMessage(multiplePlayers(user, profile.getName()));
 				}
 				
-				// TODO check if already banned
+				if (manager.isBanned(profile.getId())) {
+					sender.sendMessage(alreadyBanned(profile.getName()));
+					return;
+				}
+				
 				// TODO check if played on server
 				
 				manager.addBan(profile.getId(), BanType.BAN, reason);

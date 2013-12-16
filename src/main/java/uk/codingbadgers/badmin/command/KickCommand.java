@@ -14,17 +14,12 @@ import net.md_5.bungee.api.plugin.Command;
 public class KickCommand extends Command {
 
 	public KickCommand() {
-		super("kick");
+		super("kick", "badmin.command.ban");
 	}
 	
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 
-		if (!sender.hasPermission("badmin.command.kick")) {
-			sender.sendMessage(noPermission());
-			return;
-		}
-		
 		if (args.length < 2) {
 			sender.sendMessage(kick());
 			return;
@@ -33,7 +28,7 @@ public class KickCommand extends Command {
 		final String user = args[0];
 		
 		if (user.equalsIgnoreCase(sender.getName())) {
-			sender.sendMessage(kickSelf());
+			sender.sendMessage(selfError("kick"));
 			return;
 		}
 		

@@ -36,6 +36,7 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 		} catch (SQLException e) {
 			throw new DatabaseException(e);
 		}
+		
 		if (!tableExists("bAdmin_data")) {
 			try {
 				String query = "CREATE TABLE bAdmin_data (" +

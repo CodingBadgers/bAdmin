@@ -6,7 +6,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class TempBanCommand extends Command {
 
 	public TempBanCommand() {
-		super("tempban"); 
+		super("tempban", "badmin.command.ban"); 
 	}
 
 	@Override

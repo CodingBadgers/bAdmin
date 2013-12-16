@@ -55,6 +55,8 @@ public class bAdmin extends Plugin {
 		getProxy().getPluginManager().registerCommand(this, new TempBanCommand());
 		getProxy().getPluginManager().registerCommand(this, new WarnCommand());
 		getProxy().getPluginManager().registerCommand(this, new KickCommand());
+		getProxy().getPluginManager().registerCommand(this, new CheckBanCommand());
+		//getProxy().getPluginManager().registerCommand(this, new UnbanCommand());
 		
 	}
 
