@@ -120,7 +120,7 @@ public class WarnCommand extends Command {
 		Config config = bAdmin.getInstance().getConfig();
 		ProxyServer proxy = ProxyServer.getInstance();
 		
-		if (warnings.size() >= config.getWarningsPermBan()) {
+		if (warnings.size() == config.getWarningsPermBan()) {
 			manager.addBan(profile.getId(), BanType.BAN, reason);
 			proxy.broadcast(bannedBroadcast(profile.getName(), sender, reason));
 			ProxiedPlayer pplayer = proxy.getPlayer(profile.getName());
@@ -128,7 +128,7 @@ public class WarnCommand extends Command {
 			if (pplayer != null) {
 				pplayer.disconnect(banned(sender, reason));
 			}
-		} else if (warnings.size() >= config.getWarningsTempBan()) {
+		} else if (warnings.size() == config.getWarningsTempBan()) {
 			manager.addBan(profile.getId(), BanType.TEMP_BAN, reason);
 		}
 	}
