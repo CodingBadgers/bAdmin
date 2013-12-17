@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class BanEntry {
+public class DataEntry {
 
 	private final String name;
 	private final BanType type;

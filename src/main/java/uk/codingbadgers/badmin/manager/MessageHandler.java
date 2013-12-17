@@ -55,6 +55,13 @@ public class MessageHandler {
 			components[1] = createComponent("/isbanned <player>", false, ChatColor.RED);
 			return components;
 		}
+		
+		public static BaseComponent[] unban() {
+			BaseComponent[] components = new BaseComponent[2];
+			components[0] = createPrefix();
+			components[1] = createComponent("/unban <player>", false, ChatColor.RED);
+			return components;
+		}
 	}
 
 	public static BaseComponent[] bannedBroadcast(String banned, String banner, String reason) {
@@ -82,6 +89,20 @@ public class MessageHandler {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
 		components[1] = createComponent("You have kicked " + banned.toLowerCase(Locale.ENGLISH) + " for " + reason, false, ChatColor.RED);
+		return components;
+	}
+
+	public static BaseComponent[] unbanBroadcast(String banned, String banner) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent(banned.toLowerCase(Locale.ENGLISH) + " has been unbanned from this server by " + banner.toLowerCase(Locale.ENGLISH), false, ChatColor.RED);
+		return components;
+	}
+
+	public static BaseComponent[] unbanSuccess(String banned) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent("You have unbanned " + banned.toLowerCase(Locale.ENGLISH), false, ChatColor.RED);
 		return components;
 	}
 
@@ -113,7 +134,7 @@ public class MessageHandler {
 		return components;
 	}
 
-	public static BaseComponent[] isBannedLooking(String user) {
+	public static BaseComponent[] mojangIDLookup(String user) {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
 		components[1] = createComponent("Searching for ban for " + user + "...", false, ChatColor.RED);

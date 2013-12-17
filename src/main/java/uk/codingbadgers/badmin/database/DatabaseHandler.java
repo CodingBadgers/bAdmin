@@ -3,7 +3,7 @@ package uk.codingbadgers.badmin.database;
 import java.util.List;
 
 import lombok.Getter;
-import uk.codingbadgers.badmin.BanEntry;
+import uk.codingbadgers.badmin.DataEntry;
 import uk.codingbadgers.badmin.Config.DatabaseInfo;
 
 public abstract class DatabaseHandler {
@@ -18,12 +18,12 @@ public abstract class DatabaseHandler {
 	
 	public abstract boolean connect();
 	
-	public abstract void addBan(BanEntry entry);
+	public abstract void addBan(DataEntry entry);
 	
-	public abstract BanEntry getData(String uuid);
+	public abstract DataEntry getData(String uuid);
 	
 	public abstract void removeBan(String uuid);
 	
-	public abstract List<BanEntry> getBans();
+	public abstract List<DataEntry> getBans();
 	
 }

@@ -34,7 +34,7 @@ public class BanCommand extends Command {
 		
 		final String user = args[0];
 		
-		if (user.equalsIgnoreCase(sender.getName())) {
+		if (!sender.getName().equalsIgnoreCase("CONSOLE") && user.equalsIgnoreCase(sender.getName())) { // Skip console, no need
 			sender.sendMessage(selfError("ban"));
 			return;
 		}
@@ -53,6 +53,8 @@ public class BanCommand extends Command {
 				return;
 			}
 		}
+
+		if (bAdmin.getInstance().getConfig().isWarnOnDelay()) sender.sendMessage(mojangIDLookup(user));
 		
 		// get UUID from the Mojang API
 		proxy.getScheduler().runAsync(bAdmin.getInstance(), new Runnable() {
@@ -81,6 +83,7 @@ public class BanCommand extends Command {
 				
 				// TODO check if played on server
 				
+				System.out.println(profile.getId() + " " + profile.getName());
 				manager.addBan(profile.getId(), BanType.BAN, reason);
 				sender.sendMessage(bannedSuccess(profile.getName(), reason));
 				proxy.broadcast(bannedBroadcast(profile.getName(), sender.getName(), reason));

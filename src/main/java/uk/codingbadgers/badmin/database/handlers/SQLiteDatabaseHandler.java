@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.codingbadgers.badmin.BanEntry;
+import uk.codingbadgers.badmin.DataEntry;
 import uk.codingbadgers.badmin.BanType;
 import uk.codingbadgers.badmin.Config.DatabaseInfo;
 import uk.codingbadgers.badmin.database.DatabaseHandler;
@@ -68,7 +68,7 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 	}
 
 	@Override
-	public void addBan(BanEntry entry) {
+	public void addBan(DataEntry entry) {
 		try {
 			String query = "INSERT INTO bAdmin_data VALUES (? , ? , ? , ?);";
 			
@@ -86,7 +86,7 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 	}
 
 	@Override
-	public BanEntry getData(String uuid) {
+	public DataEntry getData(String uuid) {
 		try {
 			String query = "SELECT * FROM bAdmin_data WHERE `id` = ?;";
 	
@@ -96,7 +96,7 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 			ResultSet results = statement.executeQuery();
 			
 			if (results.next()) {
-				BanEntry entry = new BanEntry(results.getString("id"),
+				DataEntry entry = new DataEntry(results.getString("id"),
 						BanType.getFromId(results.getInt("type")),
 						results.getString("reason"),
 						results.getString("data"));
@@ -127,8 +127,8 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 	}
 
 	@Override
-	public List<BanEntry> getBans() {
-		List<BanEntry> bans = new ArrayList<BanEntry>();
+	public List<DataEntry> getBans() {
+		List<DataEntry> bans = new ArrayList<DataEntry>();
 		
 		try {
 			String query = "SELECT * FROM bAdmin_data WHERE `type` = ?;";
@@ -139,7 +139,7 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 			ResultSet results = statement.executeQuery();
 			
 			while(results.next()) {
-				BanEntry entry = new BanEntry(results.getString("id"),
+				DataEntry entry = new DataEntry(results.getString("id"),
 									BanType.getFromId(results.getInt("type")),
 									results.getString("reason"),
 									results.getString("data"));

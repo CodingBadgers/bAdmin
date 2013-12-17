@@ -13,7 +13,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import uk.codingbadgers.badmin.BanEntry;
+import uk.codingbadgers.badmin.DataEntry;
 import uk.codingbadgers.badmin.bAdmin;
 import uk.codingbadgers.badmin.Config.DatabaseInfo;
 import uk.codingbadgers.badmin.database.DatabaseHandler;
@@ -46,30 +46,49 @@ public class JsonDatabaseHandler extends DatabaseHandler {
 	}
 
 	@Override
-	public void addBan(BanEntry entry) {
+	public void addBan(DataEntry entry) {
 		JsonArray bans = getJsonBans();
 		bans.add(gson.toJsonTree(entry));
 		saveJson(bans);
 	}
 
 	@Override
-	public BanEntry getData(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void removeBan(String uuid) {
-		// TODO Auto-generated method stub
+	public DataEntry getData(String uuid) {
+		DataEntry entry = null;
 		
+		for (JsonElement element : getJsonBans()) {
+			JsonObject object = element.getAsJsonObject();
+			
+			if (object.get("name").getAsString().equalsIgnoreCase(uuid)) {
+				entry = gson.fromJson(object, DataEntry.class);
+			}
+		}
+		
+		return entry;
 	}
 
 	@Override
-	public List<BanEntry> getBans() {		
-		List<BanEntry> bans = new ArrayList<BanEntry>();
+	public void removeBan(String uuid) { // TODO better handling of removing a ban
+		JsonArray bans = getJsonBans();
+		JsonArray newbans = new JsonArray();
+		
+		for (int i = 0; i < bans.size(); i++) {
+			JsonObject ban = bans.get(i).getAsJsonObject();
+
+			if (!ban.get("name").getAsString().equalsIgnoreCase(uuid)) {
+				newbans.add(ban);
+			}
+		}
+		
+		saveJson(newbans);
+	}
+
+	@Override
+	public List<DataEntry> getBans() {		
+		List<DataEntry> bans = new ArrayList<DataEntry>();
 		
 		for (JsonElement ban : getJsonBans()) {
-			bans.add(gson.fromJson(ban, BanEntry.class));
+			bans.add(gson.fromJson(ban, DataEntry.class));
 		}
 		
 		return bans;

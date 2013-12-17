@@ -14,6 +14,7 @@ import uk.codingbadgers.badmin.command.BanCommand;
 import uk.codingbadgers.badmin.command.CheckBanCommand;
 import uk.codingbadgers.badmin.command.KickCommand;
 import uk.codingbadgers.badmin.command.TempBanCommand;
+import uk.codingbadgers.badmin.command.UnbanCommand;
 import uk.codingbadgers.badmin.command.WarnCommand;
 import uk.codingbadgers.badmin.database.DatabaseHandler;
 import uk.codingbadgers.badmin.listeners.EventListener;
@@ -56,7 +57,7 @@ public class bAdmin extends Plugin {
 		getProxy().getPluginManager().registerCommand(this, new WarnCommand());
 		getProxy().getPluginManager().registerCommand(this, new KickCommand());
 		getProxy().getPluginManager().registerCommand(this, new CheckBanCommand());
-		//getProxy().getPluginManager().registerCommand(this, new UnbanCommand());
+		getProxy().getPluginManager().registerCommand(this, new UnbanCommand());
 		
 	}
 

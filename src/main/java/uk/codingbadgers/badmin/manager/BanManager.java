@@ -3,7 +3,7 @@ package uk.codingbadgers.badmin.manager;
 import java.util.HashMap;
 import java.util.Map;
 
-import uk.codingbadgers.badmin.BanEntry;
+import uk.codingbadgers.badmin.DataEntry;
 import uk.codingbadgers.badmin.BanType;
 import uk.codingbadgers.badmin.bAdmin;
 
@@ -11,17 +11,17 @@ import lombok.Getter;
 
 public class BanManager {
 
-	@Getter private Map<String, BanEntry> bans = null;
+	@Getter private Map<String, DataEntry> bans = null;
 	
 	public BanManager() {
-		bans = new HashMap<String, BanEntry>();
+		bans = new HashMap<String, DataEntry>();
 	}
 	
 	public boolean isBanned(String uuid) {
 		return bans.containsKey(uuid);
 	}
 	
-	public BanEntry getBanEntry(String uuid) {
+	public DataEntry getBanEntry(String uuid) {
 		if (bans.containsKey(uuid)) {
 			return bans.get(uuid);
 		}
@@ -38,7 +38,7 @@ public class BanManager {
 	}
 	
 	public synchronized void addBan(String uuid, BanType type, String reason) {
-		BanEntry entry = new BanEntry(uuid, type, reason);
+		DataEntry entry = new DataEntry(uuid, type, reason);
 		bans.put(uuid, entry);
 		bAdmin.getInstance().getHandler().addBan(entry);
 	}
@@ -49,7 +49,7 @@ public class BanManager {
 	}
 	
 	public void loadBans() {
-		for (BanEntry entry : bAdmin.getInstance().getHandler().getBans()) {
+		for (DataEntry entry : bAdmin.getInstance().getHandler().getBans()) {
 			bans.put(entry.getName(), entry);
 		}
 		
