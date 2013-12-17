@@ -25,6 +25,15 @@ public class MessageHandler {
 			return components;
 		}
 	
+		public static BaseComponent[] tempbanned(String user, String reason, String expire) {
+			BaseComponent[] components = new BaseComponent[4];
+			components[0] = createComponent("You have been tempbanned from this server by " + user.toLowerCase(Locale.ENGLISH), false, ChatColor.RED);
+			components[1] = createComponent("\nThis will expire at " + expire, false, ChatColor.RED);
+			components[2] = createComponent("\n\nReason:\n", true, ChatColor.RED);
+			components[3] = createComponent(reason, false, ChatColor.RED);
+			return components;
+		}
+	
 		public static BaseComponent[] kicked(String user, String reason) {
 			BaseComponent[] components = new BaseComponent[3];
 			components[0] = createComponent("You have been kicked from this server by " + user.toLowerCase(Locale.ENGLISH), false, ChatColor.RED);
@@ -60,6 +69,23 @@ public class MessageHandler {
 			BaseComponent[] components = new BaseComponent[2];
 			components[0] = createPrefix();
 			components[1] = createComponent("/unban <player>", false, ChatColor.RED);
+			return components;
+		}
+		
+		public static BaseComponent[] warn() {
+			BaseComponent[] components = new BaseComponent[2];
+			components[0] = createPrefix();
+			components[1] = createComponent("/warn <player> <reason>", false, ChatColor.RED);
+			return components;
+		}
+		
+		public static BaseComponent[] tempban() {
+			BaseComponent[] components = new BaseComponent[5];
+			components[0] = createPrefix();
+			components[1] = createComponent("/tempban <player> <time<timeformat>> <reason>", false, ChatColor.RED);
+			components[2] = createComponent("timeformat - m = minute", false, ChatColor.RED);
+			components[3] = createComponent("           - h = hour", false, ChatColor.RED);
+			components[4] = createComponent("           - h = day", false, ChatColor.RED);
 			return components;
 		}
 	}
@@ -103,6 +129,34 @@ public class MessageHandler {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
 		components[1] = createComponent("You have unbanned " + banned.toLowerCase(Locale.ENGLISH), false, ChatColor.RED);
+		return components;
+	}
+
+	public static BaseComponent[] warningBroadcast(String banned, String banner, String reason) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent(banned.toLowerCase(Locale.ENGLISH) + " has been warned by " + banner.toLowerCase(Locale.ENGLISH) + " for " + reason, false, ChatColor.RED);
+		return components;
+	}
+
+	public static BaseComponent[] warningSuccess(String banned, String reason) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent("You have warned " + banned.toLowerCase(Locale.ENGLISH) + " for " + reason, false, ChatColor.RED);
+		return components;
+	}
+
+	public static BaseComponent[] tempbanBroadcast(String banned, String banner, String expire, String reason) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent(banned.toLowerCase(Locale.ENGLISH) + " has been tempbanned from this server by " + banner.toLowerCase(Locale.ENGLISH) + " until " + expire + " for " + reason, false, ChatColor.RED);
+		return components;
+	}
+
+	public static BaseComponent[] tempbanSuccess(String banned, String expire, String reason) {
+		BaseComponent[] components = new BaseComponent[2];
+		components[0] = createPrefix();
+		components[1] = createComponent("You have tempbanned " + banned.toLowerCase(Locale.ENGLISH) + " until " + expire + " for " + reason, false, ChatColor.RED);
 		return components;
 	}
 

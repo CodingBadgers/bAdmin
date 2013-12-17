@@ -19,17 +19,20 @@ import uk.codingbadgers.badmin.command.WarnCommand;
 import uk.codingbadgers.badmin.database.DatabaseHandler;
 import uk.codingbadgers.badmin.listeners.EventListener;
 import uk.codingbadgers.badmin.manager.BanManager;
+import uk.codingbadgers.badmin.manager.WarningManager;
 
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class bAdmin extends Plugin {
 
-	private static final int CURRENT_CONFIG_VERSION = 0x01;
+	public static final int CURRENT_CONFIG_VERSION = 0x01;
+	public static final String MOJANG_AGENT = "minecraft";
 	
 	@Getter private static bAdmin instance = null;
-	@Getter private BanManager banManager = null;
 	@Getter private Config config = null;
 	@Getter private DatabaseHandler handler = null;
+	@Getter private BanManager banManager = null;
+	@Getter private WarningManager warningManager = null;
 	
 	@Override
 	public void onDisable() {
@@ -39,16 +42,19 @@ public class bAdmin extends Plugin {
 
 	@Override
 	public void onLoad() {
+		banManager = new BanManager();
+		warningManager = new WarningManager();
+		
 		instance = this;
 	}
 
 	@Override
 	public void onEnable() {		
-		banManager = new BanManager();
 
 		loadConfig();
 		
 		banManager.loadBans();
+		warningManager.loadWarnings();
 		
 		getProxy().getPluginManager().registerListener(this, new EventListener());
 		

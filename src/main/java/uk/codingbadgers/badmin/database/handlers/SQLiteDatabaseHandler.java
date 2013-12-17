@@ -68,7 +68,7 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 	}
 
 	@Override
-	public void addBan(DataEntry entry) {
+	public void addEntry(DataEntry entry) {
 		try {
 			String query = "INSERT INTO bAdmin_data VALUES (? , ? , ? , ?);";
 			
@@ -86,12 +86,13 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 	}
 
 	@Override
-	public DataEntry getData(String uuid) {
+	public DataEntry getData(String uuid, BanType type) {
 		try {
-			String query = "SELECT * FROM bAdmin_data WHERE `id` = ?;";
+			String query = "SELECT * FROM bAdmin_data WHERE `id` = ? AND `type` = ?;";
 	
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, uuid);
+			statement.setInt(2, type.ordinal());
 			
 			ResultSet results = statement.executeQuery();
 			
@@ -112,13 +113,13 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 	}
 
 	@Override
-	public void removeBan(String uuid) {
+	public void removeEntry(String uuid, BanType type) {
 		try {
-			String query = "REMOVE FROM bAdmin_data WHERE `id` = ?";
+			String query = "REMOVE FROM bAdmin_data WHERE `id` = ? AND `type` = ?;";
 			
 			PreparedStatement statement = conn.prepareStatement(query);
-			
 			statement.setString(1, uuid);
+			statement.setInt(2, type.ordinal());
 			
 			statement.execute();
 		} catch (SQLException ex) {

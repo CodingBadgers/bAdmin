@@ -27,4 +27,9 @@ public class Config {
 	
 	@Getter private boolean warnOnDelay = true;
 	
+	@Getter private int warningsTempBan = 3;
+	
+	@Getter private int warningsPermBan = 5;
+	
+	
 }

@@ -40,12 +40,13 @@ public class BanManager {
 	public synchronized void addBan(String uuid, BanType type, String reason) {
 		DataEntry entry = new DataEntry(uuid, type, reason);
 		bans.put(uuid, entry);
-		bAdmin.getInstance().getHandler().addBan(entry);
+		bAdmin.getInstance().getHandler().addEntry(entry);
 	}
 	
 	public void removeBan(String uuid) {
 		bans.remove(uuid);
-		bAdmin.getInstance().getHandler().removeBan(uuid);
+		
+		bAdmin.getInstance().getHandler().removeEntry(uuid, BanType.BAN);
 	}
 	
 	public void loadBans() {
@@ -54,10 +55,6 @@ public class BanManager {
 		}
 		
 		bAdmin.getInstance().getLogger().info("Loaded " + bans.size() + " bans from the database");
-	}
-	
-	public void saveBans() {
-		
 	}
 	
 }

@@ -40,7 +40,7 @@ public class CheckBanCommand extends Command {
 			public void run() {
 				HttpProfileRepository repo = new HttpProfileRepository();
 			
-				ProfileCriteria criteria = new ProfileCriteria(user, "minecraft"); 
+				ProfileCriteria criteria = new ProfileCriteria(user, bAdmin.MOJANG_AGENT); 
 				Profile[] results = repo.findProfilesByCriteria(criteria);
 	
 				if (results.length == 0) {

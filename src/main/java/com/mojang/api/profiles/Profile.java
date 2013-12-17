@@ -4,7 +4,12 @@ public class Profile {
     private String id;
     private String name;
 
-    public String getId() {
+    public Profile(String name, String uuid) {
+    	this.name = name;
+    	this.id = uuid;
+	}
+
+	public String getId() {
         return id;
     }
 
