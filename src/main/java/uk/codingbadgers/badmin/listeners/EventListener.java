@@ -27,7 +27,7 @@ public class EventListener implements Listener {
 			if (result.getEntry().getType() == BanType.BAN) {
 				event.setCancelReason(BaseComponent.toLegacyText(KickMessage.currentlyBanned(result.getEntry().getReason())));
 			} else if (result.getEntry().getType() == BanType.TEMP_BAN){
-				event.setCancelReason(BaseComponent.toLegacyText(KickMessage.currentlyTempBanned(result.getEntry().getReason(), TimeUtils.parseDate(Long.parseLong(result.getEntry().getData())))));
+				event.setCancelReason(BaseComponent.toLegacyText(KickMessage.currentlyTempBanned(result.getEntry().getReason(), TimeUtils.parseDate(result.getEntry().getData()))));
 			}
 			
 			event.setCancelled(true);

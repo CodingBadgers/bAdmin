@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import uk.codingbadgers.badmin.Config;
+import uk.codingbadgers.badmin.TimeUtils;
 import uk.codingbadgers.badmin.bAdmin;
 import uk.codingbadgers.badmin.data.BanType;
 import uk.codingbadgers.badmin.data.DataEntry;
@@ -129,7 +130,14 @@ public class WarnCommand extends Command {
 				pplayer.disconnect(banned(sender, reason));
 			}
 		} else if (warnings.size() == config.getWarnings().getTempBan()) {
-			manager.addBan(profile.getId(), BanType.TEMP_BAN, reason);
+			long expire = TimeUtils.parseInput(config.getWarnings().getTempBanTime());
+			manager.addBan(profile.getId(), BanType.TEMP_BAN, reason, "" + expire);
+			proxy.broadcast(tempbanBroadcast(profile.getName(), sender, reason, "" + expire));
+			ProxiedPlayer pplayer = proxy.getPlayer(profile.getName());
+			
+			if (pplayer != null) {
+				pplayer.disconnect(tempbanned(sender, reason, "" + expire));
+			}
 		}
 	}
 	

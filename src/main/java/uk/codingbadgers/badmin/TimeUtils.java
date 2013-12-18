@@ -47,4 +47,8 @@ public class TimeUtils {
 	public static String parseDate(long time) {
 		return DATE_FORMAT.format(new Date(time));
 	}
+
+	public static String parseDate(String data) {
+		return parseDate(parseLong(data));
+	}
 }
