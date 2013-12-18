@@ -16,6 +16,15 @@ public class MessageHandler {
 			components[2] = createComponent(reason, false,ChatColor.RED);
 			return components;
 		}
+		
+		public static BaseComponent[] currentlyTempBanned(String reason, String expire) {
+			BaseComponent[] components = new BaseComponent[4];
+			components[0] = createComponent("You are currently tempbanned from this server", false, ChatColor.RED);
+			components[1] = createComponent("\nThis will expire at " + expire, false, ChatColor.RED);
+			components[2] = createComponent("\n\nReason:\n", true,ChatColor.RED);
+			components[3] = createComponent(reason, false,ChatColor.RED);
+			return components;
+		}
 	
 		public static BaseComponent[] banned(String user, String reason) {
 			BaseComponent[] components = new BaseComponent[3];

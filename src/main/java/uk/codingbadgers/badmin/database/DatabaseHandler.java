@@ -3,9 +3,9 @@ package uk.codingbadgers.badmin.database;
 import java.util.List;
 
 import lombok.Getter;
-import uk.codingbadgers.badmin.BanType;
-import uk.codingbadgers.badmin.DataEntry;
 import uk.codingbadgers.badmin.Config.DatabaseInfo;
+import uk.codingbadgers.badmin.data.BanType;
+import uk.codingbadgers.badmin.data.DataEntry;
 
 public abstract class DatabaseHandler {
 

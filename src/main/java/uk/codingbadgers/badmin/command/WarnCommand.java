@@ -7,10 +7,10 @@ import static uk.codingbadgers.badmin.manager.MessageHandler.KickMessage.*;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.codingbadgers.badmin.BanType;
 import uk.codingbadgers.badmin.Config;
-import uk.codingbadgers.badmin.DataEntry;
 import uk.codingbadgers.badmin.bAdmin;
+import uk.codingbadgers.badmin.data.BanType;
+import uk.codingbadgers.badmin.data.DataEntry;
 import uk.codingbadgers.badmin.manager.BanManager;
 import uk.codingbadgers.badmin.manager.WarningManager;
 
@@ -120,7 +120,7 @@ public class WarnCommand extends Command {
 		Config config = bAdmin.getInstance().getConfig();
 		ProxyServer proxy = ProxyServer.getInstance();
 		
-		if (warnings.size() == config.getWarningsPermBan()) {
+		if (warnings.size() == config.getWarnings().getPermBan()) {
 			manager.addBan(profile.getId(), BanType.BAN, reason);
 			proxy.broadcast(bannedBroadcast(profile.getName(), sender, reason));
 			ProxiedPlayer pplayer = proxy.getPlayer(profile.getName());
@@ -128,7 +128,7 @@ public class WarnCommand extends Command {
 			if (pplayer != null) {
 				pplayer.disconnect(banned(sender, reason));
 			}
-		} else if (warnings.size() == config.getWarningsTempBan()) {
+		} else if (warnings.size() == config.getWarnings().getTempBan()) {
 			manager.addBan(profile.getId(), BanType.TEMP_BAN, reason);
 		}
 	}

@@ -54,7 +54,7 @@ public class UnbanCommand extends Command {
 					sender.sendMessage(multiplePlayers(user, profile.getName()));
 				}
 				
-				if (!manager.isBanned(profile.getId())) {
+				if (!manager.checkBan(profile.getId()).isBanned()) {
 					sender.sendMessage(notBanned(profile.getName()));
 					return;
 				}

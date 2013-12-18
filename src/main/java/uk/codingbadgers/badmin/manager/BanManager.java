@@ -3,9 +3,10 @@ package uk.codingbadgers.badmin.manager;
 import java.util.HashMap;
 import java.util.Map;
 
-import uk.codingbadgers.badmin.DataEntry;
-import uk.codingbadgers.badmin.BanType;
 import uk.codingbadgers.badmin.bAdmin;
+import uk.codingbadgers.badmin.data.BanResult;
+import uk.codingbadgers.badmin.data.BanType;
+import uk.codingbadgers.badmin.data.DataEntry;
 
 import lombok.Getter;
 
@@ -17,8 +18,24 @@ public class BanManager {
 		bans = new HashMap<String, DataEntry>();
 	}
 	
-	public boolean isBanned(String uuid) {
-		return bans.containsKey(uuid);
+	public BanResult checkBan(String uuid) {
+		DataEntry entry = bans.get(uuid);
+		
+		if (entry == null) {
+			return BanResult.notBanned();
+		}
+		
+		if (entry.getType() == BanType.TEMP_BAN) {
+			String expireStr = entry.getData();
+			long expire = Long.parseLong(expireStr);
+			
+			if (expire < System.currentTimeMillis()) {
+				removeBan(uuid, BanResult.create(true, entry));
+				return BanResult.notBanned();
+			}
+		}
+		
+		return BanResult.create(true, entry);
 	}
 	
 	public DataEntry getBanEntry(String uuid) {
@@ -28,25 +45,37 @@ public class BanManager {
 		
 		return null;
 	}
-
-	public String getReason(String uuid) {
-		if (!isBanned(uuid)) {
-			return "Not banned";
-		}
+	
+	public void addBan(String uuid, BanType type, String reason) {
+		DataEntry entry = new DataEntry(uuid, type, reason);
+		bAdmin.getInstance().getHandler().addEntry(entry);
 		
-		return bans.get(uuid).getReason();
+		synchronized(bans) {
+			bans.put(uuid, entry);
+		}
+	}
+
+	public void addBan(String uuid, BanType type, String reason, String data) {
+		DataEntry entry = new DataEntry(uuid, type, reason, data);
+		bAdmin.getInstance().getHandler().addEntry(entry);
+		
+		synchronized(bans) {
+			bans.put(uuid, entry);
+		}
 	}
 	
-	public synchronized void addBan(String uuid, BanType type, String reason) {
-		DataEntry entry = new DataEntry(uuid, type, reason);
-		bans.put(uuid, entry);
-		bAdmin.getInstance().getHandler().addEntry(entry);
+	public void removeBan(String uuid, BanResult result) {		
+		if (!result.isBanned()) {
+			return;
+		}
+		
+		bans.remove(uuid);
+		
+		bAdmin.getInstance().getHandler().removeEntry(uuid, result.getEntry().getType());
 	}
 	
 	public void removeBan(String uuid) {
-		bans.remove(uuid);
-		
-		bAdmin.getInstance().getHandler().removeEntry(uuid, BanType.BAN);
+		removeBan(uuid, checkBan(uuid));
 	}
 	
 	public void loadBans() {

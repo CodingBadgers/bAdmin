@@ -54,7 +54,7 @@ public class CheckBanCommand extends Command {
 					sender.sendMessage(multiplePlayers(user, profile.getName()));
 				}
 				
-				if (manager.isBanned(profile.getId())) {
+				if (manager.checkBan(profile.getId()).isBanned()) {
 					sender.sendMessage(isBanned(profile.getName()));
 				} else {
 					sender.sendMessage(notBanned(profile.getName()));

@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.codingbadgers.badmin.DataEntry;
-import uk.codingbadgers.badmin.BanType;
 import uk.codingbadgers.badmin.Config.DatabaseInfo;
+import uk.codingbadgers.badmin.data.BanType;
+import uk.codingbadgers.badmin.data.DataEntry;
 import uk.codingbadgers.badmin.database.DatabaseHandler;
 import uk.codingbadgers.badmin.exception.DatabaseException;
 

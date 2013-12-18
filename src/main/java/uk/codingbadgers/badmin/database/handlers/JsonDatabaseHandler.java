@@ -13,10 +13,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import uk.codingbadgers.badmin.BanType;
-import uk.codingbadgers.badmin.DataEntry;
 import uk.codingbadgers.badmin.bAdmin;
 import uk.codingbadgers.badmin.Config.DatabaseInfo;
+import uk.codingbadgers.badmin.data.BanType;
+import uk.codingbadgers.badmin.data.DataEntry;
 import uk.codingbadgers.badmin.database.DatabaseHandler;
 
 public class JsonDatabaseHandler extends DatabaseHandler {

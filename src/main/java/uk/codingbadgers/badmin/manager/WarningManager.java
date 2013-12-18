@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
-import uk.codingbadgers.badmin.BanType;
-import uk.codingbadgers.badmin.DataEntry;
 import uk.codingbadgers.badmin.bAdmin;
+import uk.codingbadgers.badmin.data.BanType;
+import uk.codingbadgers.badmin.data.DataEntry;
 
 public class WarningManager {
 

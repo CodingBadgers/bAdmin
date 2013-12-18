@@ -1,4 +1,4 @@
-package uk.codingbadgers.badmin;
+package uk.codingbadgers.badmin.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

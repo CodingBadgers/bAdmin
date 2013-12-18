@@ -6,8 +6,8 @@ import com.mojang.api.profiles.HttpProfileRepository;
 import com.mojang.api.profiles.Profile;
 import com.mojang.api.profiles.ProfileCriteria;
 
-import uk.codingbadgers.badmin.BanType;
 import uk.codingbadgers.badmin.bAdmin;
+import uk.codingbadgers.badmin.data.BanType;
 import uk.codingbadgers.badmin.manager.BanManager;
 import static uk.codingbadgers.badmin.manager.MessageHandler.*;
 import static uk.codingbadgers.badmin.manager.MessageHandler.KickMessage.*;
@@ -76,7 +76,7 @@ public class BanCommand extends Command {
 					sender.sendMessage(multiplePlayers(user, profile.getName()));
 				}
 				
-				if (manager.isBanned(profile.getId())) {
+				if (manager.checkBan(profile.getId()).isBanned()) {
 					sender.sendMessage(alreadyBanned(profile.getName()));
 					return;
 				}
