@@ -128,10 +128,6 @@ public class bAdmin extends Plugin {
 				}
 				
 				try (FileWriter writer = new FileWriter(config)) {
-//					if (!config.exists() && !config.createNewFile()) {
-//						throw new ConfigException("Failed to create config file");
-//					}
-					
 					this.config = new Config();
 					gson.toJson(this.config, writer);
 					writer.flush();
