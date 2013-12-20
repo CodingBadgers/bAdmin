@@ -6,15 +6,16 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import static java.lang.Long.parseLong;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TimeUtils {
 
 	private static final Pattern TIME_REGEX = Pattern.compile("([0-9]+)([mhd])");
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-	
-	private TimeUtils() {
-	}
 	
 	public static long parseInput(String arg) {
 		System.out.println(arg);

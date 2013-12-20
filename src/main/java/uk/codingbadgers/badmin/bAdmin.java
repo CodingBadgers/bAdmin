@@ -107,23 +107,34 @@ public class bAdmin extends Plugin {
 			}
 			
 			if (this.config == null || this.config.getConfigVersion() != CURRENT_CONFIG_VERSION) {
-				getLogger().warning("--------------------------------------------------------");
+				File backup = new File(this.getDataFolder(), "config.json." + this.config.getConfigVersion());
+				
+				getLogger().warning("----------------------------------------------------------------");
 				getLogger().warning("Outdated config, regenerating.");
+				getLogger().warning("The old config will be located at \"plugins/bAdmin/" + backup.getName() + "\".");
 				getLogger().warning("Please note you will have to resetup parts of the config");
-				getLogger().warning("--------------------------------------------------------");
+				getLogger().warning("----------------------------------------------------------------");
 
-				if (!config.delete()) {
-					throw new ConfigException("Error deleting old config file");
+				if (backup.exists() && !backup.delete()) {
+					throw new ConfigException("Error deleting backup config file (" + backup.getName() + ")");
+				}
+				
+				if (!config.renameTo(backup)) {
+					throw new ConfigException("Error backing up old config file");
+				}
+				
+				if (config.exists() && !config.delete()) {
+					throw new ConfigException("Failed to delete old config file");
 				}
 				
 				try (FileWriter writer = new FileWriter(config)) {
-					if (config.createNewFile()) {
-						this.config = new Config();
-						gson.toJson(this.config, writer);
-						writer.flush();
-					} else {
-						throw new ConfigException("Failed to create config file");
-					}
+//					if (!config.exists() && !config.createNewFile()) {
+//						throw new ConfigException("Failed to create config file");
+//					}
+					
+					this.config = new Config();
+					gson.toJson(this.config, writer);
+					writer.flush();
 				}
 			}
 			
