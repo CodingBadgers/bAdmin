@@ -121,7 +121,7 @@ public class WarnCommand extends Command {
 		Config config = bAdmin.getInstance().getConfig();
 		ProxyServer proxy = ProxyServer.getInstance();
 		
-		if (warnings.size() == config.getWarnings().getPermBan()) {
+		if (warnings.size() >= config.getWarnings().getPermBan()) { // AND STAY BANNED
 			manager.addBan(profile.getId(), BanType.BAN, reason);
 			proxy.broadcast(bannedBroadcast(profile.getName(), sender, reason));
 			ProxiedPlayer pplayer = proxy.getPlayer(profile.getName());
