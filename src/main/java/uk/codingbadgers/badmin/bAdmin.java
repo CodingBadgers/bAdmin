@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,6 +18,8 @@ import uk.codingbadgers.badmin.command.TempBanCommand;
 import uk.codingbadgers.badmin.command.UnbanCommand;
 import uk.codingbadgers.badmin.command.WarnCommand;
 import uk.codingbadgers.badmin.database.DatabaseHandler;
+import uk.codingbadgers.badmin.exception.AdminException;
+import uk.codingbadgers.badmin.exception.ConfigException;
 import uk.codingbadgers.badmin.listeners.EventListener;
 import uk.codingbadgers.badmin.manager.BanManager;
 import uk.codingbadgers.badmin.manager.WarningManager;
@@ -50,24 +53,33 @@ public class bAdmin extends Plugin {
 
 	@Override
 	public void onEnable() {		
-
-		loadConfig();
-		
-		banManager.loadBans();
-		warningManager.loadWarnings();
-		
-		getProxy().getPluginManager().registerListener(this, new EventListener());
-		
-		getProxy().getPluginManager().registerCommand(this, new BanCommand());
-		getProxy().getPluginManager().registerCommand(this, new TempBanCommand());
-		getProxy().getPluginManager().registerCommand(this, new WarnCommand());
-		getProxy().getPluginManager().registerCommand(this, new KickCommand());
-		getProxy().getPluginManager().registerCommand(this, new CheckBanCommand());
-		getProxy().getPluginManager().registerCommand(this, new UnbanCommand());
+		try {
+			loadConfig();
+			
+			banManager.loadBans();
+			warningManager.loadWarnings();
+			
+			getProxy().getPluginManager().registerListener(this, new EventListener());
+			
+			getProxy().getPluginManager().registerCommand(this, new BanCommand());
+			getProxy().getPluginManager().registerCommand(this, new TempBanCommand());
+			getProxy().getPluginManager().registerCommand(this, new WarnCommand());
+			getProxy().getPluginManager().registerCommand(this, new KickCommand());
+			getProxy().getPluginManager().registerCommand(this, new CheckBanCommand());
+			getProxy().getPluginManager().registerCommand(this, new UnbanCommand());
+		} catch (AdminException ex) {
+			getLogger().log(Level.SEVERE, "A error has ocurred trying to load " + getDescription().getName() + " v" + getDescription().getVersion() + ".");
+			getLogger().log(Level.SEVERE, "Please check your setup before reporting this to the author.");
+			getLogger().log(Level.SEVERE, "Error follows:", ex);
+		} catch (Exception ex) {
+			getLogger().log(Level.SEVERE, "A unexpected error has ocurred trying to load " + getDescription().getName() + " v" + getDescription().getVersion() + ".");
+			getLogger().log(Level.SEVERE, "Please report this to the plugin author.");
+			getLogger().log(Level.SEVERE, "Error follows:", ex);
+		}
 		
 	}
 
-	private void loadConfig() {
+	private void loadConfig() throws AdminException {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		this.config = new Config();
 		File config = new File(this.getDataFolder(), "config.json");
@@ -75,13 +87,18 @@ public class bAdmin extends Plugin {
 		try{
 			if (!config.exists()) {
 				if (!config.getParentFile().exists()) {
-					config.getParentFile().mkdirs();
+					if (!config.getParentFile().mkdirs()) {
+						throw new ConfigException("Error creating datafolder");
+					}
 				}
 				
 				try (FileWriter writer = new FileWriter(config)){
-					config.createNewFile();
-					gson.toJson(this.config, writer);
-					writer.flush();
+					if (config.createNewFile()) {
+						gson.toJson(this.config, writer);
+						writer.flush();
+					} else {
+						throw new ConfigException("Failed to create config file");
+					}
 				}
 			}
 			
@@ -96,20 +113,24 @@ public class bAdmin extends Plugin {
 				getLogger().warning("--------------------------------------------------------");
 
 				if (!config.delete()) {
-					throw new IOException("Error deleting old config file");
+					throw new ConfigException("Error deleting old config file");
 				}
 				
 				try (FileWriter writer = new FileWriter(config)) {
-					config.createNewFile();
-					gson.toJson(new Config(), writer);
-					writer.flush();
+					if (config.createNewFile()) {
+						this.config = new Config();
+						gson.toJson(this.config, writer);
+						writer.flush();
+					} else {
+						throw new ConfigException("Failed to create config file");
+					}
 				}
 			}
 			
 		} catch (JsonIOException e) {
-			e.printStackTrace();
+			throw new ConfigException(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new ConfigException(e);
 		}
 		
 		handler = this.config.getDatabaseInfo().getType().getHandler();

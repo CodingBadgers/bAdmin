@@ -34,7 +34,7 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://" + info.getHost() + ":" + info.getPort() + "/" + info.getDatabase(), info.getUser(), info.getPass());
 		} catch (SQLException e) {
-			throw new DatabaseException(e);
+			throw new DatabaseException("Cannot connect to database", e);
 		}
 		
 		if (!tableExists("bAdmin_data")) {
@@ -49,7 +49,7 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 				
 				statement.execute();
 			} catch (SQLException e) {
-				throw new DatabaseException(e);
+				throw new DatabaseException("Failed to create table", e);
 			}
 		}
 		
@@ -63,7 +63,7 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 			
 			return resultSet.next();
 		} catch (SQLException e) {
-			throw new DatabaseException(e);
+			throw new DatabaseException("Error executing query", e);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 			
 			statement.execute();
 		} catch (SQLException ex) {
-			throw new DatabaseException(ex);
+			throw new DatabaseException("Error executing query", ex);
 		}
 	}
 
@@ -108,7 +108,7 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 			return null;
 			
 		} catch (SQLException ex) {
-			throw new DatabaseException(ex);
+			throw new DatabaseException("Error executing query", ex);
 		}
 	}
 
@@ -123,7 +123,7 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 			
 			statement.execute();
 		} catch (SQLException ex) {
-			throw new DatabaseException(ex);
+			throw new DatabaseException("Error executing query", ex);
 		}
 	}
 
@@ -148,7 +148,7 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 			}
 			
 		} catch (SQLException ex) {
-			throw new DatabaseException(ex);
+			throw new DatabaseException("Error executing query", ex);
 		}
 		
 		return bans;
