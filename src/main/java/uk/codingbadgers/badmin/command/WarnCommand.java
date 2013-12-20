@@ -132,11 +132,11 @@ public class WarnCommand extends Command {
 		} else if (warnings.size() == config.getWarnings().getTempBan()) {
 			long expire = TimeUtils.parseInput(config.getWarnings().getTempBanTime());
 			manager.addBan(profile.getId(), BanType.TEMP_BAN, reason, "" + expire);
-			proxy.broadcast(tempbanBroadcast(profile.getName(), sender, reason, "" + expire));
+			proxy.broadcast(tempbanBroadcast(profile.getName(), sender, reason, TimeUtils.parseDate(expire)));
 			ProxiedPlayer pplayer = proxy.getPlayer(profile.getName());
 			
 			if (pplayer != null) {
-				pplayer.disconnect(tempbanned(sender, reason, "" + expire));
+				pplayer.disconnect(tempbanned(sender, reason, TimeUtils.parseDate(expire)));
 			}
 		}
 	}

@@ -115,7 +115,7 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 	@Override
 	public void removeEntry(String uuid, BanType type) {
 		try {
-			String query = "REMOVE FROM bAdmin_data WHERE `id` = ? AND `type` = ?;";
+			String query = "DELETE FROM bAdmin_data WHERE `id` = ? AND `type` = ?;";
 			
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, uuid);
