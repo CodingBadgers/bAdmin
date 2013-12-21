@@ -46,7 +46,7 @@ public class BanCommand extends Command {
 		
 		for (ProxiedPlayer player : proxy.getPlayers()) {
 			if (player.getName().equals(user)) {
-				manager.addBan(player.getUUID(), BanType.BAN, reason);
+				manager.addBan(player.getUUID(), BanType.BAN, reason, sender.getName());
 				sender.sendMessage(bannedSuccess(player.getName(), reason));
 				proxy.broadcast(bannedBroadcast(player.getName(), sender.getName(), reason));
 				player.disconnect(banned(sender.getName(), reason));
@@ -84,7 +84,7 @@ public class BanCommand extends Command {
 				// TODO check if played on server
 				
 				System.out.println(profile.getId() + " " + profile.getName());
-				manager.addBan(profile.getId(), BanType.BAN, reason);
+				manager.addBan(profile.getId(), BanType.BAN, reason, sender.getName());
 				sender.sendMessage(bannedSuccess(profile.getName(), reason));
 				proxy.broadcast(bannedBroadcast(profile.getName(), sender.getName(), reason));
 			}

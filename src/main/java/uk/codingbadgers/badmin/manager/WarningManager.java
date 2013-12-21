@@ -31,8 +31,8 @@ public class WarningManager {
 		return null;
 	}
 
-	public synchronized void addWarning(String uuid, BanType type, String reason) {
-		addWarning(new DataEntry(uuid, type, reason));
+	public synchronized void addWarning(String uuid, BanType type, String reason, String admin) {
+		addWarning(new DataEntry(uuid, type, reason, admin));
 	}
 
 	public synchronized void addWarning(DataEntry entry) {

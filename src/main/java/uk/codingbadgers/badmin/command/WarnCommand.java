@@ -54,7 +54,7 @@ public class WarnCommand extends Command {
 			if (player.getName().equals(user)) {
 				final Profile profile = new Profile(player.getName(), player.getUUID());
 				
-				manager.addWarning(player.getUUID(), BanType.WARN, reason);
+				manager.addWarning(player.getUUID(), BanType.WARN, reason, sender.getName());
 				sender.sendMessage(warningSuccess(player.getName(), reason));
 				proxy.broadcast(warningBroadcast(player.getName(), sender.getName(), reason));
 				
@@ -95,8 +95,7 @@ public class WarnCommand extends Command {
 				
 				// TODO check if played on server
 				
-				System.out.println(profile.getId() + " " + profile.getName());
-				manager.addWarning(profile.getId(), BanType.WARN, reason);
+				manager.addWarning(profile.getId(), BanType.WARN, reason, sender.getName());
 				sender.sendMessage(warningSuccess(profile.getName(), reason));
 				proxy.broadcast(warningBroadcast(profile.getName(), sender.getName(), reason));
 				
@@ -122,7 +121,7 @@ public class WarnCommand extends Command {
 		ProxyServer proxy = ProxyServer.getInstance();
 		
 		if (warnings.size() >= config.getWarnings().getPermBan()) { // AND STAY BANNED
-			manager.addBan(profile.getId(), BanType.BAN, reason);
+			manager.addBan(profile.getId(), BanType.BAN, reason, sender);
 			proxy.broadcast(bannedBroadcast(profile.getName(), sender, reason));
 			ProxiedPlayer pplayer = proxy.getPlayer(profile.getName());
 			
@@ -131,7 +130,7 @@ public class WarnCommand extends Command {
 			}
 		} else if (warnings.size() == config.getWarnings().getTempBan()) {
 			long expire = TimeUtils.parseInput(config.getWarnings().getTempBanTime());
-			manager.addBan(profile.getId(), BanType.TEMP_BAN, reason, "" + expire);
+			manager.addBan(profile.getId(), BanType.TEMP_BAN, reason, "" + expire, sender);
 			proxy.broadcast(tempbanBroadcast(profile.getName(), sender, reason, TimeUtils.parseDate(expire)));
 			ProxiedPlayer pplayer = proxy.getPlayer(profile.getName());
 			

@@ -13,5 +13,6 @@ public class DataEntry {
 	private final BanType type;
 	private final String reason;
 	private String data = "";
+	private final String admin;
 	
 }

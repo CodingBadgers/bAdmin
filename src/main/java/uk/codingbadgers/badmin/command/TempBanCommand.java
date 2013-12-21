@@ -49,7 +49,7 @@ public class TempBanCommand extends Command {
 		
 		for (ProxiedPlayer player : proxy.getPlayers()) {
 			if (player.getName().equals(user)) {
-				manager.addBan(player.getUUID(), BanType.TEMP_BAN, reason, "" + expire);
+				manager.addBan(player.getUUID(), BanType.TEMP_BAN, reason, "" + expire, sender.getName());
 				sender.sendMessage(tempbanSuccess(player.getName(), reason, parseDate(expire)));
 				proxy.broadcast(tempbanBroadcast(player.getName(), sender.getName(), reason, parseDate(expire)));
 				player.disconnect(tempbanned(sender.getName(), reason, parseDate(expire)));
@@ -87,7 +87,7 @@ public class TempBanCommand extends Command {
 				// TODO check if played on server
 				
 				System.out.println(profile.getId() + " " + profile.getName());
-				manager.addBan(profile.getId(), BanType.TEMP_BAN, reason, "" + expire);
+				manager.addBan(profile.getId(), BanType.TEMP_BAN, reason, "" + expire, sender.getName());
 				sender.sendMessage(tempbanSuccess(profile.getName(), reason, parseDate(expire)));
 				proxy.broadcast(tempbanBroadcast(profile.getName(), sender.getName(), reason, parseDate(expire)));
 			}

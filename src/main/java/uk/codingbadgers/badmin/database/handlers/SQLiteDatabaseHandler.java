@@ -41,8 +41,9 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 			try {
 				String query = "CREATE TABLE bAdmin_data (" +
 								"`id` VARCHAR(64) NOT NULL," +
-								"`type` TINYINT," +
+								"`type` TINYINT NOT NULL,," +
 								"`reason` TEXT NOT NULL," +
+								"`sender` TEXT NOT NULL," +
 								"`data` TEXT);";
 				
 				PreparedStatement statement = conn.prepareStatement(query);
@@ -77,7 +78,8 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 			statement.setString(1, entry.getName());
 			statement.setInt(2, entry.getType().ordinal());
 			statement.setString(3, entry.getReason());
-			statement.setString(4, entry.getData());
+			statement.setString(3, entry.getAdmin());
+			statement.setString(5, entry.getData());
 			
 			statement.execute();
 		} catch (SQLException ex) {
@@ -100,6 +102,7 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 				DataEntry entry = new DataEntry(results.getString("id"),
 						BanType.getFromId(results.getInt("type")),
 						results.getString("reason"),
+						results.getString("sender"),
 						results.getString("data"));
 				
 				return entry;
@@ -143,6 +146,7 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 				DataEntry entry = new DataEntry(results.getString("id"),
 									BanType.getFromId(results.getInt("type")),
 									results.getString("reason"),
+									results.getString("sender"),
 									results.getString("data"));
 				bans.add(entry);
 			}

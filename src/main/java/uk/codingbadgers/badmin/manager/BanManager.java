@@ -46,8 +46,8 @@ public class BanManager {
 		return null;
 	}
 	
-	public void addBan(String uuid, BanType type, String reason) {
-		DataEntry entry = new DataEntry(uuid, type, reason);
+	public void addBan(String uuid, BanType type, String reason, String admin) {
+		DataEntry entry = new DataEntry(uuid, type, reason, admin);
 		bAdmin.getInstance().getHandler().addEntry(entry);
 		
 		synchronized(bans) {
@@ -55,8 +55,8 @@ public class BanManager {
 		}
 	}
 
-	public void addBan(String uuid, BanType type, String reason, String data) {
-		DataEntry entry = new DataEntry(uuid, type, reason, data);
+	public void addBan(String uuid, BanType type, String reason, String data, String admin) {
+		DataEntry entry = new DataEntry(uuid, type, reason, data, admin);
 		bAdmin.getInstance().getHandler().addEntry(entry);
 		
 		synchronized(bans) {
