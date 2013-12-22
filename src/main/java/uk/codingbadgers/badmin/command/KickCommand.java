@@ -37,7 +37,7 @@ public class KickCommand extends Command {
 		final ProxyServer proxy = ProxyServer.getInstance();
 		
 		for (ProxiedPlayer player : proxy.getPlayers()) {
-			if (player.getName().equals(user)) {
+			if (player.getName().equalsIgnoreCase(user)) {
 				sender.sendMessage(kickedSuccess(player.getName(), reason));
 				proxy.broadcast(kickedBroadcast(player.getName(), sender.getName(), reason));
 				player.disconnect(kicked(sender.getName(), reason));

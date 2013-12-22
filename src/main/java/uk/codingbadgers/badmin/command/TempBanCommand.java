@@ -48,7 +48,7 @@ public class TempBanCommand extends Command {
 		final ProxyServer proxy = ProxyServer.getInstance();
 		
 		for (ProxiedPlayer player : proxy.getPlayers()) {
-			if (player.getName().equals(user)) {
+			if (player.getName().equalsIgnoreCase(user)) {
 				manager.addBan(player.getUUID(), BanType.TEMP_BAN, reason, "" + expire, sender.getName());
 				sender.sendMessage(tempbanSuccess(player.getName(), reason, parseDate(expire)));
 				proxy.broadcast(tempbanBroadcast(player.getName(), sender.getName(), reason, parseDate(expire)));

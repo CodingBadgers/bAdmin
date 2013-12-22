@@ -51,7 +51,7 @@ public class WarnCommand extends Command {
 		final ProxyServer proxy = ProxyServer.getInstance();
 		
 		for (ProxiedPlayer player : proxy.getPlayers()) {
-			if (player.getName().equals(user)) {
+			if (player.getName().equalsIgnoreCase(user)) {
 				final Profile profile = new Profile(player.getName(), player.getUUID());
 				
 				manager.addWarning(player.getUUID(), BanType.WARN, reason, sender.getName());
