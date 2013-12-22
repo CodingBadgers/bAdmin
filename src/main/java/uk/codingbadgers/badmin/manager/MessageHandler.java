@@ -89,12 +89,9 @@ public class MessageHandler {
 		}
 		
 		public static BaseComponent[] tempban() {
-			BaseComponent[] components = new BaseComponent[5];
+			BaseComponent[] components = new BaseComponent[2];
 			components[0] = createPrefix();
-			components[1] = createComponent("/tempban <player> <time<timeformat>> <reason>", false, ChatColor.RED);
-			components[2] = createComponent("timeformat - m = minute", false, ChatColor.RED);
-			components[3] = createComponent("           - h = hour", false, ChatColor.RED);
-			components[4] = createComponent("           - h = day", false, ChatColor.RED);
+			components[1] = createComponent("/tempban <player> <time<m h d>> <reason>", false, ChatColor.RED);
 			return components;
 		}
 	}
@@ -211,10 +208,10 @@ public class MessageHandler {
 		return components;
 	}
 
-	public static BaseComponent[] isBanned(String user) {
+	public static BaseComponent[] isBanned(String user, String reason) {
 		BaseComponent[] components = new BaseComponent[2];
 		components[0] = createPrefix();
-		components[1] = createComponent(user + " is currently banned", false, ChatColor.RED);
+		components[1] = createComponent(user + " is currently banned for " + reason, false, ChatColor.RED);
 		return components;
 	}
 	

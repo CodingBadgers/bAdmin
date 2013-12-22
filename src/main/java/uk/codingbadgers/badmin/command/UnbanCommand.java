@@ -16,7 +16,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class UnbanCommand extends Command {
 
 	public UnbanCommand() {
-		super("unban", "badmin.commands.unban");
+		super("unban", "badmin.command.unban");
 	}
 
 	@Override

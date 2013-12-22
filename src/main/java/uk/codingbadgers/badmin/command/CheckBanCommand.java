@@ -1,6 +1,7 @@
 package uk.codingbadgers.badmin.command;
 
 import uk.codingbadgers.badmin.bAdmin;
+import uk.codingbadgers.badmin.data.BanResult;
 import uk.codingbadgers.badmin.manager.BanManager;
 
 import com.mojang.api.profiles.HttpProfileRepository;
@@ -16,7 +17,7 @@ import static uk.codingbadgers.badmin.manager.MessageHandler.CommandUsage.*;
 public class CheckBanCommand extends Command {
 
 	public CheckBanCommand() {
-		super("checkban", "badmin.commands.checkban", "isbanned");
+		super("checkban", "badmin.command.checkban", "isbanned");
 	}
 
 	@Override
@@ -54,8 +55,10 @@ public class CheckBanCommand extends Command {
 					sender.sendMessage(multiplePlayers(user, profile.getName()));
 				}
 				
-				if (manager.checkBan(profile.getId()).isBanned()) {
-					sender.sendMessage(isBanned(profile.getName()));
+				BanResult result = manager.checkBan(profile.getId());
+				
+				if (result.isBanned()) {
+					sender.sendMessage(isBanned(profile.getName(), result.getEntry().getReason()));
 				} else {
 					sender.sendMessage(notBanned(profile.getName()));
 				}
