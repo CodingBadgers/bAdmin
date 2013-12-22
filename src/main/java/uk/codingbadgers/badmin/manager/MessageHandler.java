@@ -223,7 +223,7 @@ public class MessageHandler {
 	}
 	
 	private static BaseComponent createPrefix() {
-		return new ComponentBuilder("[bAdmin] ").bold(true).color(ChatColor.DARK_RED).create()[0];
+		return new ComponentBuilder("[bAdmin] ").bold(false).color(ChatColor.DARK_RED).create()[0];
 	}
 	
 }

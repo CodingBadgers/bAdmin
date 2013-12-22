@@ -32,7 +32,12 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 		}
 		
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://" + info.getHost() + ":" + info.getPort() + "/" + info.getDatabase(), info.getUser(), info.getPass());
+			conn = DriverManager.getConnection(
+					"jdbc:mysql://" + info.getHost() + ":" + info.getPort() + "/" +
+					info.getDatabase() + "?" +
+					"user=" + info.getUser() +
+					"&password=" + info.getPass()
+				);
 		} catch (SQLException e) {
 			throw new DatabaseException("Cannot connect to database", e);
 		}
@@ -71,7 +76,7 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 	@Override
 	public void addEntry(DataEntry entry) {
 		try {
-			String query = "INSERT INTO bAdmin_data VALUES (? , ? , ? , ?);";
+			String query = "INSERT INTO bAdmin_data VALUES (? , ? , ? , ?, ?);";
 			
 			PreparedStatement statement = conn.prepareStatement(query);
 			
@@ -135,10 +140,9 @@ public class SQLDatabaseHandler extends DatabaseHandler {
 		List<DataEntry> bans = new ArrayList<DataEntry>();
 		
 		try {
-			String query = "SELECT * FROM bAdmin_data WHERE `type` = ?;";
+			String query = "SELECT * FROM bAdmin_data;";
 	
 			PreparedStatement statement = conn.prepareStatement(query);
-			statement.setInt(1, BanType.BAN.ordinal());
 			
 			ResultSet results = statement.executeQuery();
 			

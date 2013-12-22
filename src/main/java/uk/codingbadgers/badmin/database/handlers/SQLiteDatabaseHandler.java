@@ -71,7 +71,7 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 	@Override
 	public void addEntry(DataEntry entry) {
 		try {
-			String query = "INSERT INTO bAdmin_data VALUES (? , ? , ? , ?);";
+			String query = "INSERT INTO bAdmin_data VALUES (? , ? , ? , ?, ?);";
 			
 			PreparedStatement statement = conn.prepareStatement(query);
 			
@@ -135,10 +135,9 @@ public class SQLiteDatabaseHandler extends DatabaseHandler {
 		List<DataEntry> bans = new ArrayList<DataEntry>();
 		
 		try {
-			String query = "SELECT * FROM bAdmin_data WHERE `type` = ?;";
+			String query = "SELECT * FROM bAdmin_dat;";
 	
 			PreparedStatement statement = conn.prepareStatement(query);
-			statement.setInt(1, BanType.BAN.ordinal());
 			
 			ResultSet results = statement.executeQuery();
 			
