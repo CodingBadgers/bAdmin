@@ -80,7 +80,9 @@ public class BanManager {
 	
 	public void loadBans() {
 		for (DataEntry entry : bAdmin.getInstance().getHandler().getBans()) {
-			bans.put(entry.getName(), entry);
+			if (entry.getType().equals(BanType.BAN) || entry.getType().equals(BanType.TEMP_BAN)) {
+				bans.put(entry.getName(), entry);
+			}
 		}
 		
 		bAdmin.getInstance().getLogger().info("Loaded " + bans.size() + " bans from the database");
