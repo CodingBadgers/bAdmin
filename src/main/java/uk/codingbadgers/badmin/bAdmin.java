@@ -82,27 +82,23 @@ public class bAdmin extends Plugin {
 	private void loadConfig() throws AdminException {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		this.config = new Config();
-		File config = new File(this.getDataFolder(), "config.json");
+		File configFile = new File(this.getDataFolder(), "config.json");
 
 		try{
-			if (!config.exists()) {
-				if (!config.getParentFile().exists()) {
-					if (!config.getParentFile().mkdirs()) {
+			if (!configFile.exists()) {
+				if (!configFile.getParentFile().exists()) {
+					if (!configFile.getParentFile().mkdirs()) {
 						throw new ConfigException("Error creating datafolder");
 					}
 				}
 				
-				try (FileWriter writer = new FileWriter(config)){
-					if (config.createNewFile()) {
-						gson.toJson(this.config, writer);
-						writer.flush();
-					} else {
-						throw new ConfigException("Failed to create config file");
-					}
+				try (FileWriter writer = new FileWriter(configFile)){
+					gson.toJson(this.config, writer);
+					writer.flush();
 				}
 			}
 			
-			try (FileReader reader = new FileReader(config)) {
+			try (FileReader reader = new FileReader(configFile)) {
 				this.config = gson.fromJson(reader, Config.class);
 			}
 			
@@ -119,15 +115,15 @@ public class bAdmin extends Plugin {
 					throw new ConfigException("Error deleting backup config file (" + backup.getName() + ")");
 				}
 				
-				if (!config.renameTo(backup)) {
+				if (!configFile.renameTo(backup)) {
 					throw new ConfigException("Error backing up old config file");
 				}
 				
-				if (config.exists() && !config.delete()) {
+				if (configFile.exists() && !configFile.delete()) {
 					throw new ConfigException("Failed to delete old config file");
 				}
 				
-				try (FileWriter writer = new FileWriter(config)) {
+				try (FileWriter writer = new FileWriter(configFile)) {
 					this.config = new Config();
 					gson.toJson(this.config, writer);
 					writer.flush();
