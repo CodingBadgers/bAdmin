@@ -18,7 +18,6 @@ public class TimeUtils {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	
 	public static long parseInput(String arg) {
-		System.out.println(arg);
 		Matcher matcher = TIME_REGEX.matcher(arg);
 		
 		if (!matcher.matches()) {

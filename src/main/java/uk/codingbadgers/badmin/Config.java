@@ -36,6 +36,4 @@ public class Config {
 	
 	@Getter private boolean warnOnDelay = true;
 	
-	
-	
 }
